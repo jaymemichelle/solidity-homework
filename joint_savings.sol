@@ -35,13 +35,12 @@ contract JointSavings {
     
         address payable accountOne;
         address payable accountTwo;
-        bool address public;
-        bool lastToWithdraw;
+        address public lastToWithdraw;
         uint public lastWithdrawAmount;
         uint public contractBalance;
 
-        function getInfo() view public returns(address, address payable, bool, uint, string memory, string memory) {
-            return (accountOne, accountTwo, address public, lastToWithdraw, lastWithdrawAmount, ontractBalance);
+        function getInfo() view public returns(address payable, address payable, address, uint, uint) {
+            return (accountOne, accountTwo, lastToWithdraw, lastWithdrawAmount, contractBalance);
     }
 
 
@@ -64,21 +63,21 @@ contract JointSavings {
         */
         // YOUR CODE HERE!
         
-        require(address(this).balance >= amount, "Insufficient funds!");
+        require(contractBalance >= amount, "Insufficient funds!");
 
         /*
         Add and `if` statement to check if the `lastToWithdraw` is not equal to (`!=`) to `recipient` If `lastToWithdraw` is not equal, then set it to the current value of `recipient`.
         */
         // YOUR CODE HERE!
         
-        if (last_to_withdraw != recipient) {
+        if (lastToWithdraw != recipient) {
         lastToWithdraw = recipient;
         }
 
         // Call the `transfer` function of the `recipient` and pass it the `amount` to transfer as an argument.
         // YOUR CODE HERE!
         
-        transfer = amount;
+        recipient.transfer(amount);
 
         // Set  `lastWithdrawAmount` equal to `amount`
         // YOUR CODE HERE!
@@ -90,7 +89,7 @@ contract JointSavings {
         
         contractBalance = address(this).balance - amount;
 
-        return msg.sender.transfer(amount);
+        // return msg.sender.transfer(amount);
     }
 
     // Define a `public payable` function named `deposit`.
